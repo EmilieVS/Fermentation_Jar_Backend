@@ -29,6 +29,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function getUserData () {
+        $user = Auth::user();
+
+        //$userdata à rajouter pour json
+        return response()->json($user);
+
+    }
+
     public function checkUser(Request $request)
     {
         return $request->user();
