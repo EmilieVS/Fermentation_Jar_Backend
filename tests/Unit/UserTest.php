@@ -2,13 +2,20 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     public function test_register(): void
     {
-        $response = $this->postJson('/api/users', ['name' => 'Sally']);
+        $response = $this->postJson('/api/users', [
+            'display_name' => 'Lolo le zozo',
+            'username' => 'nadrojria',
+            'email' => 'miso_maven@umamifarm.net',
+            'password' => 'pickle123',
+            'created_at' => now(),
+            'updated_at' => now()]
+        );
 
         $response
 
