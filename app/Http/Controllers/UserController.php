@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    
+
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -29,11 +29,14 @@ class UserController extends Controller
         ]);
     }
 
-    public function getUserData () {
-        $user = Auth::user();
+    public function getUserData()
+    {
+        $userdata = auth()->user();
 
-        //$userdata à rajouter pour json
-        return response()->json($user);
+        
+        return response()->json([
+            'data' => $userdata
+        ]);
 
     }
 
@@ -44,31 +47,31 @@ class UserController extends Controller
 
     public function editProfile($request)
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
         $this->validate($request, [
-        'display_name' => 'required|max:25:users,display_name,'.$user->id,
-        'username' => 'required|username|max:25|unique:users,username,'.$user->id,
-        'email' => 'required|email|max:25|unique:users,email,'.$user->id,
-        'password'=> 'nullable|min:8|confirmed|:users,password,'.$user->id,
+            'display_name' => 'required|max:25:users,display_name,' .$user->id,
+            'username' => 'required|username|max:25|unique:users,username,' .$user->id,
+            'email' => 'required|email|max:25|unique:users,email,' .$user->id,
+            'password' => 'nullable|min:8|confirmed|:users,password,' .$user->id,
 
-    ]);
+        ]);
 
-    /**
-     * storing the input fields name & email in variable $input
-     * type array
-     **/
-    $newUserData = $request->only('display_name','username','email','password');
+        /**
+         * storing the input fields name & email in variable $input
+         * type array
+         **/
+        $newUserData = $request->only('display_name', 'username', 'email', 'password');
 
-    /**
-     * Accessing the update method and passing in $input array of data
-     **/
-    $user->update($newUserData);
+        /**
+         * Accessing the update method and passing in $input array of data
+         **/
+        $user->update($newUserData);
 
-    /**
-     * after everything is done return them pack to /profile/ uri
-     **/
-    return back();
+        /**
+         * after everything is done return them pack to /profile/ uri
+         **/
+        return back();
     }
 
 
