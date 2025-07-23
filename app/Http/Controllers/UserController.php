@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
     {
         $userdata = auth()->user();
 
-        
+
         return response()->json([
             'data' => $userdata
         ]);
@@ -45,34 +46,38 @@ class UserController extends Controller
         return $request->user();
     }
 
-    public function editProfile($request)
+    public function editProfile(Request $request)
     {
-        $user = auth()->user();
+       
+        $user = auth()-> user();
+    
+   
+        // $user->$
 
-        $this->validate($request, [
-            'display_name' => 'required|max:25:users,display_name,' .$user->id,
-            'username' => 'required|username|max:25|unique:users,username,' .$user->id,
-            'email' => 'required|email|max:25|unique:users,email,' .$user->id,
-            'password' => 'nullable|min:8|confirmed|:users,password,' .$user->id,
+        $updatedData = $request->validate([
+            'display_name' => ['string'],
+            'email' => ['email', Rule::unique('users')->ignore($user->id)],
+            'password' => ['min.8', 'confirmed'],
 
         ]);
+    echo ($$updatedData);
 
-        /**
-         * storing the input fields name & email in variable $input
-         * type array
-         **/
-        $newUserData = $request->only('display_name', 'username', 'email', 'password');
+        if (!empty($updatedData['password'])) {
+            $updatedData['password'] = Hash::make($updatedData['password']);
+        } else {
+            unset($updatedData['password']);
+        }
 
-        /**
-         * Accessing the update method and passing in $input array of data
-         **/
-        $user->update($newUserData);
 
-        /**
-         * after everything is done return them pack to /profile/ uri
-         **/
-        return back();
+        $user->update($updatedData);
+
+
+        
+        return response()->json([
+            'data' => $updatedData,
+        ], 200);
     }
 
+    
 
 }
