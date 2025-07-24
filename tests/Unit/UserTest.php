@@ -17,7 +17,7 @@ class UserTest extends TestCase
         $response = $this->postJson(
             '/api/users',
             [
-                'display_name' => 'Clem',
+                'displayName' => 'Clem',
                 'username' => 'fitz_assassin',
                 'email' => 'kefir_aficionada@umamifarm.net',
                 'password' => 'tepache69',
@@ -31,8 +31,9 @@ class UserTest extends TestCase
             ->assertJson(
                 fn(AssertableJson $json) =>
                 $json->whereAllType([
-                    'token' => 'string',
-                    'Type' => 'string'
+                    'user' => 'array',
+                    'access_token' => 'string',
+                    'token_type' => 'string'
                 ])
             );
     }
@@ -44,7 +45,7 @@ class UserTest extends TestCase
 
         $response
             ->assertStatus(422) // Standard validation error for Laravel
-            ->assertJsonValidationErrors(['display_name', 'username', 'email', 'password']);
+            ->assertJsonValidationErrors(['displayName', 'username', 'email', 'password']);
     }
 
 
@@ -57,7 +58,7 @@ class UserTest extends TestCase
         $response = $this->postJson(
             '/api/users',
             [
-                'display_name' => 'Clem',
+                'displayName' => 'Clem',
                 'username' => 'fitz_assassin', // Already existing username in our DB
                 'email' => 'kefir_aficionada@umamifarm.net',
                 'password' => 'tepache69',
@@ -91,7 +92,7 @@ class UserTest extends TestCase
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
             ->put('api/users', [
-                "display_name"=> "FinalTest",
+                "displayName"=> "FinalTest",
                 "email"=> "miso_test@umamifarm.net",
                 "password"=> "confirmedTest"
             ])
