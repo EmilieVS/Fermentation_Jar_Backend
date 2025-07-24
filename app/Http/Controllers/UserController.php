@@ -32,13 +32,14 @@ class UserController extends Controller
             'token_type' => 'Bearer'
         ]);
     }
+    
 
     public function getUserData()
     {
         $userdata = auth()->user();
 
         return response()->json([
-            'data' => $userdata
+            'user' => $userdata
         ]);
 
     }

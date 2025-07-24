@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogController;
 
 
+Route::get('/posts/all', [PostController::class,'getAllPosts']);
 Route::post('/users', [UserController::class, 'register']);
 Route::post('/login', [LogController::class, 'login']);
 

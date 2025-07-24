@@ -10,7 +10,7 @@ class PostController extends Controller
     public function createPost (Request $request) {
 
      $user = auth()->user();
-     $displayName = $user->display_name;
+     $displayName = $user->displayName;
      $username = $user->username;
 
      $descriptionRules = $request -> validate([
@@ -45,6 +45,15 @@ class PostController extends Controller
             ->get();
 
         return response()->json($postList);
+    }
+
+    public function getAllPosts() {
+    
+        $post = Post::all();
+
+       return response()->json($post);
+            
+
     }
 
 
