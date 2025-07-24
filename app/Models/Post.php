@@ -10,7 +10,7 @@ class Post extends Model
 
     use HasApiTokens;
     protected $fillable = [
-        'display_name',
+        'displayName',
         'username',
         'description',
         

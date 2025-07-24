@@ -10,7 +10,7 @@ class PostController extends Controller
     public function createPost (Request $request) {
 
      $user = auth()->user();
-     $display_name = $user->display_name;
+     $displayName = $user->display_name;
      $username = $user->username;
 
      $descriptionRules = $request -> validate([
@@ -18,7 +18,7 @@ class PostController extends Controller
      ]);
         
         $postContent = Post::create([
-            'display_name' => $display_name,
+            'displayName' => $displayName,
             'username' => $username,
             'description' => $descriptionRules['description']
               
