@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogController;
 
 
-
-Route::post('/users/register', [UserController::class, 'register']);
+Route::post('/users', [UserController::class, 'register']);
 Route::post('/login', [LogController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -18,6 +17,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 
-
-// });
 

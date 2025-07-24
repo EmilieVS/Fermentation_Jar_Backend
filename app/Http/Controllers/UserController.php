@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -34,7 +36,6 @@ class UserController extends Controller
     {
         $userdata = auth()->user();
 
-
         return response()->json([
             'data' => $userdata
         ]);
@@ -48,36 +49,34 @@ class UserController extends Controller
 
     public function editProfile(Request $request)
     {
-       
-        $user = auth()-> user();
-    
-   
-        // $user->$
 
-        $updatedData = $request->validate([
-            'display_name' => ['string'],
-            'email' => ['email', Rule::unique('users')->ignore($user->id)],
-            'password' => ['min.8', 'confirmed'],
+        $user = auth()->user();
 
-        ]);
-    echo ($$updatedData);
+        try {
+            $updatedData = $request->validate([
+                'display_name' => ['sometimes', 'string', 'max:255'],
+                'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
+                'password' => ['sometimes', 'nullable', 'min:7']
+
+            ]);
+
+        } catch (ValidationException $erreur) {
+
+            return 'erreur';
+        }
 
         if (!empty($updatedData['password'])) {
             $updatedData['password'] = Hash::make($updatedData['password']);
-        } else {
-            unset($updatedData['password']);
         }
-
 
         $user->update($updatedData);
 
 
-        
         return response()->json([
             'data' => $updatedData,
         ], 200);
     }
 
-    
+
 
 }
