@@ -13,7 +13,7 @@ class UserTest extends TestCase
     public function test_register(): void
     {
         $response = $this->postJson(
-            '/api/users/register',
+            '/api/users',
             [
                 'display_name' => 'Clem',
                 'username' => 'fitz_assassin',
