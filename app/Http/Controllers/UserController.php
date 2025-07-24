@@ -15,7 +15,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $data = $request->validate([
-            'display_name' => 'required',
+            'displayName' => 'required',
             'username' => 'required|unique:users',
             'email' => 'required|unique:users',
             'password' => 'required',
@@ -24,20 +24,22 @@ class UserController extends Controller
 
         // Mass assign the validated request data to a new instance of the User model
         $user = User::create($data);
-        $token = $user->createToken('my-token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'token' => $token,
-            'Type' => 'Bearer'
+            'user' => $user,
+            'access_token' => $token,
+            'token_type' => 'Bearer'
         ]);
     }
+    
 
     public function getUserData()
     {
         $userdata = auth()->user();
 
         return response()->json([
-            'data' => $userdata
+            'user' => $userdata
         ]);
 
     }

@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-            'display_name' => 'Lolo le zozo',
+            'displayName' => 'Lolo le zozo',
             'username' => 'nadrojria',
             'email' => 'miso_maven@umamifarm.net',
             'password' => Hash::make('pickle123'),
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Houmous man',
+            'displayName' => 'Houmous man',
             'username' => 'hazbraaaa',
             'email' => 'kombucha_king@brewmail.net',
             'password' => Hash::make('kombuchafather'),
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Leo',
+            'displayName' => 'Leo',
             'username' => 'patatasbravas',
             'email' => 'sourdough_sally@fermentlife.com',
             'password' => Hash::make('ferment73'),
@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Hestia',
+            'displayName' => 'Hestia',
             'username' => 'midiune',
             'email' => 'wild_yeast_whisperer@fermentopia.io',
             'password' => Hash::make('kimchibatch'),
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Emi',
+            'displayName' => 'Emi',
             'username' => ' korogu972',
             'email' => 'cheese_cave_curator@lactoferment.co',
             'password' => Hash::make('kraut69'),
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Carinou',
+            'displayName' => 'Carinou',
             'username' => 'catsarethebest',
             'email' => 'kefir_enthusiast@probiotic.zone',
             'password' => Hash::make('probiointana'),
@@ -64,7 +64,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Caro',
+            'displayName' => 'Caro',
             'username' => 'bulbibulbi',
             'email' => 'tempeh_artisan@moldymagic.org',
             'password' => Hash::make('scobyscoby'),
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Sally La Zozo',
+            'displayName' => 'Sally La Zozo',
             'username' => 'User Zozo',
             'email' => 'atest@code.com',
             'password' => Hash::make('testing'),
@@ -80,7 +80,7 @@ class UserSeeder extends Seeder
             'updated_at' => now(),
             ],
             [
-            'display_name' => 'Flaya',
+            'displayName' => 'Flaya',
             'username' => 'flayaticone',
             'email' => 'sauerkraut_scientist@cabbage.club',
             'password' => Hash::make('tepachedragon'),
@@ -90,5 +90,7 @@ class UserSeeder extends Seeder
 
             ];
         User::insert($users);
+        
+
     }
 }
