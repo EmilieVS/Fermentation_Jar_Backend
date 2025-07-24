@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -52,12 +52,11 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-
         try {
             $updatedData = $request->validate([
-                'display_name' => ['sometimes','string','max:255'],
-                'email' => ['sometimes','email', Rule::unique('users')->ignore($user->id)],
-                'password' => ['sometimes', 'nullable', 'min:7', 'confirmed']
+                'display_name' => ['sometimes', 'string', 'max:255'],
+                'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
+                'password' => ['sometimes', 'nullable', 'min:7']
 
             ]);
 
@@ -68,8 +67,8 @@ class UserController extends Controller
 
         if (!empty($updatedData['password'])) {
             $updatedData['password'] = Hash::make($updatedData['password']);
-        } 
-        
+        }
+
         $user->update($updatedData);
 
 
