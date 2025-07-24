@@ -79,6 +79,22 @@ class UserTest extends TestCase
             ->withSession(['banned' => false])
             ->get('api/users')
             ->assertStatus(200);
-
+        
     }
-}
+    
+    // Test case 5 : The user can edit their profile's info if they are logged in
+  
+    public function test_editProfile(): void
+    {
+        $user = User::factory()->create();
+        
+        $response = $this->actingAs($user)
+            ->withSession(['banned' => false])
+            ->put('api/users', [
+                "display_name"=> "FinalTest",
+                "email"=> "miso_test@umamifarm.net",
+                "password"=> "confirmedTest"
+            ])
+            ->assertStatus(200);
+        }
+    }
