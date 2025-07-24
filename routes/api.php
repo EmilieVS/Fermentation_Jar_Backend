@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/users', [UserController::class, 'getUserData']);
     Route::put('/users',[UserController::class, 'editProfile']);
     Route::post('/logout', [LogController::class, 'logout']);
+    Route::post('/posts',[PostController::class,'createPost']);
+    Route::get('/posts', [PostController::class,'getUserPost']);
 });
 
 
