@@ -10,46 +10,60 @@ class PostController extends Controller {
     public function createPost(Request $request) {
 
         $user = auth()->user();
-        $displayName = $user->displayName;
-        $username = $user->username;
 
-        $descriptionRules = $request -> validate([
-            'description' =>  ['required','min:50','max:300'],
+        $validated = $request->validate([
+            'description' => ['required', 'min:50', 'max:300'],
         ]);
-        
-        $postContent = Post::create([
-            'displayName' => $displayName,
-            'username' => $username,
-            'description' => $descriptionRules['description']
+
+        $post = Post::create([
+            'user_id' => $user->id,
+            'description' => $validated['description'],
         ]);
-   
+
         return response()->json([
             'message' => 'Thanks for sharing',
-            'data' => $postContent,
+            'data' => [
+                'description' => $post->description,
+                'displayName' => $user->displayName,
+                'username' => $user->username,
+                'created_at' => $post->created_at,
+            ],
         ], 200);
     }
 
     public function getUserPost() {
 
         $user = auth()->user();
-        $username = $user->username;
+        $user_id = $user->id;
 
-        $post = Post::where('username', $username)
-            ->get();
+        $posts = Post::where('user_id', $user_id)->get();
 
-        $postContent = $post->pluck('description');
+        $response = $posts->map(function ($post) {
+            return [
+                'description' => $post->description,
+                'displayName' => $post->user->displayName,
+                'username' => $post->user->username,
+                'created_at' => $post->created_at,
+            ];
+        });
 
-        $postList = Post::wherein('description', $postContent)
-            ->get();
-
-        return response()->json($postList, 200);
+        return response()->json($response, 200);
     }
 
     public function getAllPosts() {
-    
-        $post = Post::all();
+        
+        $posts = Post::all();
 
-        return response()->json($post, 200);
+        $response = $posts->map(function ($post) {
+            return [
+                'description' => $post->description,
+                'displayName' => $post->user->displayName,
+                'username' => $post->user->username,
+                'created_at' => $post->created_at,
+            ];
+        });
+
+        return response()->json($response, 200);
     }
 
 }
