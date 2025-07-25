@@ -52,7 +52,7 @@ class UserController extends Controller {
 
         try {
             $updatedData = $request->validate([
-                'display_name' => ['sometimes', 'string', 'max:255'],
+                'displayName' => ['sometimes', 'string', 'max:255'],
                 'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
                 'password' => ['sometimes', 'nullable', 'min:7']
             ]);
