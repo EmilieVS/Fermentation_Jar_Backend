@@ -9,19 +9,18 @@ class PostController extends Controller {
 
     public function createPost(Request $request) {
 
-     $user = auth()->user();
-     $displayName = $user->displayName;
-     $username = $user->username;
+        $user = auth()->user();
+        $displayName = $user->displayName;
+        $username = $user->username;
 
-     $descriptionRules = $request -> validate([
-        'description' => 'required','min:50','max:300',
-     ]);
+        $descriptionRules = $request -> validate([
+            'description' => 'required','min:50','max:300',
+        ]);
         
         $postContent = Post::create([
             'displayName' => $displayName,
             'username' => $username,
             'description' => $descriptionRules['description']
-              
         ]);
    
         return response()->json([

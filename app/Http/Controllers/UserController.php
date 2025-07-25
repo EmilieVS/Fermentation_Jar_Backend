@@ -18,7 +18,7 @@ class UserController extends Controller {
             'username' => 'required|unique:users',
             'email' => 'required|unique:users',
             'password' => 'required',
-
+            'bio' => 'nullable|string',
         ]);
 
         // Mass assign the validated request data to a new instance of the User model
@@ -32,7 +32,6 @@ class UserController extends Controller {
         ], 201);
     }
     
-
     public function getUserData() {
 
         $userdata = auth()->user();
@@ -56,7 +55,6 @@ class UserController extends Controller {
                 'display_name' => ['sometimes', 'string', 'max:255'],
                 'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
                 'password' => ['sometimes', 'nullable', 'min:7']
-
             ]);
         }
         catch (ValidationException $erreur) {
