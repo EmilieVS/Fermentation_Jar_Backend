@@ -14,7 +14,7 @@ class PostController extends Controller {
         $username = $user->username;
 
         $descriptionRules = $request -> validate([
-            'description' => 'required','min:50','max:300',
+            'description' =>  ['required','min:50','max:300'],
         ]);
         
         $postContent = Post::create([
