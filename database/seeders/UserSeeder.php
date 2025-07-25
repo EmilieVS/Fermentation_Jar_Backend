@@ -14,7 +14,7 @@ class UserSeeder extends Seeder {
 
         $users = [
             [
-                'displayName' => 'Lolo le zozo',
+                'display_name' => 'Lolo le zozo',
                 'username' => 'nadrojria',
                 'email' => 'miso_maven@umamifarm.net',
                 'password' => Hash::make('pickle123'),
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2025-01-25 10:30:00'),
             ],
             [
-                'displayName' => 'Houmous man',
+                'display_name' => 'Houmous man',
                 'username' => 'hazbraaaa',
                 'email' => 'kombucha_king@brewmail.net',
                 'password' => Hash::make('test'),
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2025-01-18 10:30:00'),
             ],
             [
-                'displayName' => 'Leo',
+                'display_name' => 'Leo',
                 'username' => 'patatasbravas',
                 'email' => 'sourdough_sally@fermentlife.com',
                 'password' => Hash::make('ferment73'),
@@ -41,7 +41,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2024-07-04 10:30:00'),
             ],
             [
-                'displayName' => 'Hestia',
+                'display_name' => 'Hestia',
                 'username' => 'midiune',
                 'email' => 'wild_yeast_whisperer@fermentopia.io',
                 'password' => Hash::make('kimchibatch'),
@@ -50,7 +50,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2024-12-13 10:30:00'),
             ],
             [
-                'displayName' => 'Emi',
+                'display_name' => 'Emi',
                 'username' => ' korogu972',
                 'email' => 'cheese_cave_curator@lactoferment.co',
                 'password' => Hash::make('kraut69'),
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2024-01-04 10:30:00'),
             ],
             [
-                'displayName' => 'Carinou',
+                'display_name' => 'Carinou',
                 'username' => 'catsarethebest',
                 'email' => 'kefir_enthusiast@probiotic.zone',
                 'password' => Hash::make('probiointana'),
@@ -68,7 +68,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2024-09-04 10:30:00'),
             ],
             [
-                'displayName' => 'Caro',
+                'display_name' => 'Caro',
                 'username' => 'bulbibulbi',
                 'email' => 'tempeh_artisan@moldymagic.org',
                 'password' => Hash::make('scobyscoby'),
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder {
                 'updated_at' => Carbon::parse('2024-10-01 10:30:00'),
             ],
             [
-                'displayName' => 'Flaya',
+                'display_name' => 'Flaya',
                 'username' => 'flayaticone',
                 'email' => 'sauerkraut_scientist@cabbage.club',
                 'password' => Hash::make('tepachedragon'),

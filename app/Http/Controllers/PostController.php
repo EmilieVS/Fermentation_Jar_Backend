@@ -24,7 +24,7 @@ class PostController extends Controller {
             'message' => 'Thanks for sharing',
             'data' => [
                 'description' => $post->description,
-                'displayName' => $user->displayName,
+                'display_name' => $user->display_name,
                 'username' => $user->username,
                 'created_at' => $post->created_at,
             ],
@@ -41,7 +41,7 @@ class PostController extends Controller {
         $response = $posts->map(function ($post) {
             return [
                 'description' => $post->description,
-                'displayName' => $post->user->displayName,
+                'display_name' => $post->user->display_name,
                 'username' => $post->user->username,
                 'created_at' => $post->created_at,
             ];
@@ -57,7 +57,7 @@ class PostController extends Controller {
         $response = $posts->map(function ($post) {
             return [
                 'description' => $post->description,
-                'displayName' => $post->user->displayName,
+                'display_name' => $post->user->display_name,
                 'username' => $post->user->username,
                 'created_at' => $post->created_at,
             ];

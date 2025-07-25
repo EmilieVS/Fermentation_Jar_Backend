@@ -14,7 +14,7 @@ class UserController extends Controller {
     public function register(Request $request) {
 
         $data = $request->validate([
-            'displayName' => 'required',
+            'display_name' => 'required',
             'username' => 'required|unique:users',
             'email' => 'required|unique:users',
             'password' => 'required',
@@ -52,9 +52,10 @@ class UserController extends Controller {
 
         try {
             $updatedData = $request->validate([
-                'displayName' => ['sometimes', 'string', 'max:255'],
+                'display_name' => ['sometimes', 'string', 'max:255'],
                 'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
-                'password' => ['sometimes', 'nullable', 'min:7']
+                'password' => ['sometimes'],
+                'bio'=> ['sometimes','string','max:255']
             ]);
         }
         catch (ValidationException $erreur) {
