@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\User;
 
 class Post extends Model {
 
     use HasApiTokens;
 
     protected $fillable = [
-        'displayName',
-        'username',
+        'user_id',
         'description',
     ];
 
@@ -19,5 +19,9 @@ class Post extends Model {
         'password',
         'remember_token',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 
 }
