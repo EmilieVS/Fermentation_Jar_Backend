@@ -17,7 +17,7 @@ class User extends Authenticatable {
         'username',
         'email',
         'password',
-        
+        'bio'
     ];
 
     protected $hidden = [
@@ -31,5 +31,5 @@ class User extends Authenticatable {
             'password' => 'hashed',
         ];
     }
+    
 }
-

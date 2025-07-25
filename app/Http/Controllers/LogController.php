@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LogController extends Controller
-{
+class LogController extends Controller {
+
     public function login(Request $request) {
 
-        if (auth()->attempt([
-            'email' => $request->input('email'), 
-            'password' => $request->input('password')])) {
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
 
             $user = auth()->user();
 
@@ -19,7 +17,7 @@ class LogController extends Controller
                 'user' => $user,
                 'access_token' => $token,
                 'token_type' => 'Bearer'
-            ]);
+            ], 200);
         }
 
         return response()->json([
@@ -29,10 +27,12 @@ class LogController extends Controller
     }
 
     public function logout(Request $request) {
+
         $request->user()->currentAccessToken()->delete();
+
         return response()->json([
             'message' => 'Logout successfull',
-        ]);
+        ], 200);
     }
-}
 
+}

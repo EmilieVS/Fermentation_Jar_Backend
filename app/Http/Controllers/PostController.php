@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
-class PostController extends Controller
-{
-    public function createPost (Request $request) {
+class PostController extends Controller {
+
+    public function createPost(Request $request) {
 
      $user = auth()->user();
      $displayName = $user->displayName;
@@ -30,8 +30,7 @@ class PostController extends Controller
         ], 200);
     }
 
-
-    public function getUserPost () {
+    public function getUserPost() {
 
         $user = auth()->user();
         $username = $user->username;
@@ -44,18 +43,14 @@ class PostController extends Controller
         $postList = Post::wherein('description', $postContent)
             ->get();
 
-        return response()->json($postList);
+        return response()->json($postList, 200);
     }
 
     public function getAllPosts() {
     
         $post = Post::all();
 
-       return response()->json($post);
-            
-
+        return response()->json($post, 200);
     }
-
-
 
 }

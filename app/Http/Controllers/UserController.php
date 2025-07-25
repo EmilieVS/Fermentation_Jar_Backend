@@ -9,11 +9,10 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
 
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
+
         $data = $request->validate([
             'displayName' => 'required',
             'username' => 'required|unique:users',
@@ -30,27 +29,25 @@ class UserController extends Controller
             'user' => $user,
             'access_token' => $token,
             'token_type' => 'Bearer'
-        ]);
+        ], 201);
     }
     
 
-    public function getUserData()
-    {
+    public function getUserData() {
+
         $userdata = auth()->user();
 
         return response()->json([
             'user' => $userdata
-        ]);
-
+        ], 200);
     }
 
-    public function checkUser(Request $request)
-    {
+    public function checkUser(Request $request) {
+
         return $request->user();
     }
 
-    public function editProfile(Request $request)
-    {
+    public function editProfile(Request $request) {
 
         $user = auth()->user();
 
@@ -61,9 +58,8 @@ class UserController extends Controller
                 'password' => ['sometimes', 'nullable', 'min:7']
 
             ]);
-
-        } catch (ValidationException $erreur) {
-
+        }
+        catch (ValidationException $erreur) {
             return 'erreur';
         }
 
@@ -73,12 +69,9 @@ class UserController extends Controller
 
         $user->update($updatedData);
 
-
         return response()->json([
             'data' => $updatedData,
         ], 200);
     }
-
-
 
 }
