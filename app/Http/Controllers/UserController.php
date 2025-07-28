@@ -52,14 +52,16 @@ class UserController extends Controller {
 
         try {
             $updatedData = $request->validate([
-                'display_name' => ['sometimes', 'string', 'max:255'],
+                'display_name' => ['sometimes', 'string'],
                 'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
                 'password' => ['sometimes'],
-                'bio'=> ['sometimes','string','max:255']
+                'bio'=> ['sometimes','string']
             ]);
         }
         catch (ValidationException $erreur) {
-            return 'erreur';
+            return response()->json([
+            'erreur' => 'Something not ok.',
+        ], 500);
         }
 
         if (!empty($updatedData['password'])) {
@@ -69,7 +71,7 @@ class UserController extends Controller {
         $user->update($updatedData);
 
         return response()->json([
-            'data' => $updatedData,
+            'user' => $updatedData,
         ], 200);
     }
 
