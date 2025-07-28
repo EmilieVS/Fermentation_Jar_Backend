@@ -78,4 +78,26 @@ class UserController extends Controller {
         ], 200);
     }
 
+
+    public function deleteAccount () {
+
+        $user = auth()-> user();
+
+        try {
+        $user -> delete();
+        return response()->json([
+                'message' => 'Compte supprimé avec succès',
+                
+        ], 200);
+    }
+
+    catch (ValidationException $erreur) {
+            return response()->json([
+                'erreur' => 'Erreur lors de la suppression.',
+                'details' => $erreur->errors(),
+        ], 422);
+        } 
+
+    }
+
 }
