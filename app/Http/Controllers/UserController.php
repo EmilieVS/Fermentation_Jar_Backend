@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Post;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
 
         $data = $request->validate([
             'display_name' => 'required',
@@ -31,8 +35,9 @@ class UserController extends Controller {
             'token_type' => 'Bearer'
         ], 201);
     }
-    
-    public function getUserData() {
+
+    public function getUserData()
+    {
 
         $userdata = auth()->user();
 
@@ -41,12 +46,14 @@ class UserController extends Controller {
         ], 200);
     }
 
-    public function checkUser(Request $request) {
+    public function checkUser(Request $request)
+    {
 
         return $request->user();
     }
 
-    public function editProfile(Request $request) {
+    public function editProfile(Request $request)
+    {
 
         $user = auth()->user();
 
@@ -55,14 +62,13 @@ class UserController extends Controller {
                 'display_name' => ['sometimes', 'string'],
                 'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
                 'password' => ['sometimes'],
-                'bio'=> ['sometimes','string']
+                'bio' => ['sometimes', 'string']
             ]);
-        }
-        catch (ValidationException $erreur) {
+        } catch (ValidationException $erreur) {
             return response()->json([
                 'erreur' => 'Erreur de validation.',
                 'details' => $erreur->errors(),
-        ], 422);
+            ], 422);
         }
 
         if (!empty($updatedData['password'])) {
@@ -76,6 +82,31 @@ class UserController extends Controller {
         return response()->json([
             'user' => $user,
         ], 200);
+    }
+
+
+    public function deleteAccount()
+    {
+        $deletedUser = auth()->user();
+        
+        $deleteUserPost = Post::where('user_id',$deletedUser->id);
+
+        try {
+            
+            $deletedUser->delete();
+            $deleteUserPost ->delete();
+
+            return response()->json([
+                'message' => 'Compte supprimé avec succès',
+
+            ], 200);
+        } catch (Exception $erreur) {
+            return response()->json([
+                'erreur' => 'Erreur lors de la suppression.',
+                'details' => $erreur,
+            ], 500);
+        }
+
     }
 
 }
