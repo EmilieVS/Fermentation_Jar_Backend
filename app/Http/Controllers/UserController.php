@@ -60,8 +60,9 @@ class UserController extends Controller {
         }
         catch (ValidationException $erreur) {
             return response()->json([
-            'erreur' => 'Something not ok.',
-        ], 500);
+                'erreur' => 'Erreur de validation.',
+                'details' => $erreur->errors(),
+        ], 422);
         }
 
         if (!empty($updatedData['password'])) {
@@ -70,8 +71,10 @@ class UserController extends Controller {
 
         $user->update($updatedData);
 
+        $user->refresh();
+
         return response()->json([
-            'user' => $updatedData,
+            'user' => $user,
         ], 200);
     }
 
