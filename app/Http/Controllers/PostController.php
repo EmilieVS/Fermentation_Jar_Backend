@@ -12,7 +12,7 @@ class PostController extends Controller {
         $user = auth()->user();
 
         $validated = $request->validate([
-            'description' => ['required', 'min:50', 'max:300'],
+            'description' => ['required', 'min:20', 'max:300'],
         ]);
 
         $post = Post::create([
