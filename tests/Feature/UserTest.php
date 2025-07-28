@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -15,9 +15,9 @@ class UserTest extends TestCase
     public function test_register(): void
     {
         $response = $this->postJson(
-            '/api/users',
+            '/api/user',
             [
-                'displayName' => 'Clem',
+                'display_name' => 'Clem',
                 'username' => 'fitz_assassin',
                 'email' => 'kefir_aficionada@umamifarm.net',
                 'password' => 'tepache69',
@@ -27,7 +27,7 @@ class UserTest extends TestCase
         );
 
         $response
-            ->assertStatus(200)
+            ->assertStatus(201)
             ->assertJson(
                 fn(AssertableJson $json) =>
                 $json->whereAllType([
@@ -41,11 +41,11 @@ class UserTest extends TestCase
     // Test case 2 : Unsucessful registration if the required fields are not filled
     public function test_register_fails_with_missing_required_fields(): void
     {
-        $response = $this->postJson('/api/users', []);
+        $response = $this->postJson('/api/user', []);
 
         $response
             ->assertStatus(422) // Standard validation error for Laravel
-            ->assertJsonValidationErrors(['displayName', 'username', 'email', 'password']);
+            ->assertJsonValidationErrors(['display_name', 'username', 'email', 'password']);
     }
 
 
@@ -56,9 +56,9 @@ class UserTest extends TestCase
         User::factory()->create(['username' => 'fitz_assassin']);
 
         $response = $this->postJson(
-            '/api/users',
+            '/api/user',
             [
-                'displayName' => 'Clem',
+                'display_name' => 'Clem',
                 'username' => 'fitz_assassin', // Already existing username in our DB
                 'email' => 'kefir_aficionada@umamifarm.net',
                 'password' => 'tepache69',
@@ -71,28 +71,26 @@ class UserTest extends TestCase
     }
 
     // Test case 4 : The user can't access their profile's info if they are not logged in
-
     public function test_getUserData(): void
     {
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->get('api/users')
+            ->get('api/user')
             ->assertStatus(200);
         
     }
     
     // Test case 5 : The user can edit their profile's info if they are logged in
-  
     public function test_editProfile(): void
     {
         $user = User::factory()->create();
         
         $response = $this->actingAs($user)
             ->withSession(['banned' => false])
-            ->put('api/users', [
-                "displayName"=> "FinalTest",
+            ->put('api/user', [
+                "display_name"=> "FinalTest",
                 "email"=> "miso_test@umamifarm.net",
                 "password"=> "confirmedTest"
             ])
