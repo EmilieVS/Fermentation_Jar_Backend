@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Post;
 
 class UserController extends Controller
 {
@@ -87,10 +88,13 @@ class UserController extends Controller
     public function deleteAccount()
     {
         $deletedUser = auth()->user();
+        
+        $deleteUserPost = Post::where('user_id',$deletedUser->id);
 
         try {
             
             $deletedUser->delete();
+            $deleteUserPost ->delete();
 
             return response()->json([
                 'message' => 'Compte supprimé avec succès',
