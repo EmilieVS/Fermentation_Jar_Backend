@@ -8,16 +8,16 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogController;
 
 
-Route::get('/posts/all', [PostController::class,'getAllPosts']);
-Route::post('/users', [UserController::class, 'register']);
+Route::get('/post', [PostController::class,'getAllPosts']);
+Route::post('/user', [UserController::class, 'register']);
 Route::post('/login', [LogController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/users', [UserController::class, 'getUserData']);
-    Route::put('/users',[UserController::class, 'editProfile']);
+    Route::get('/user', [UserController::class, 'getUserData']);
+    Route::put('/user',[UserController::class, 'editProfile']);
     Route::post('/logout', [LogController::class, 'logout']);
-    Route::post('/posts',[PostController::class,'createPost']);
-    Route::get('/posts', [PostController::class,'getUserPost']);
+    Route::post('/post',[PostController::class,'createPost']);
+    Route::get('/user/post', [PostController::class,'getUserPost']);
 });
 
 
