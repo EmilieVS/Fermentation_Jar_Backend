@@ -70,20 +70,28 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        try {
-            $updatedData = $request->validate([
-                'display_name' => ['sometimes', 'string'],
-                'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
-                'password' => ['sometimes'],
-                'bio' => ['sometimes', 'string']
-            ]);
+        // try {
+            $updatedData = $request->validate(
+                [
+                    'display_name' => ['sometimes', 'string'],
+                    'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
+                    'password' => ['sometimes'],
+                    'bio' => ['sometimes', 'string']
+                ],
+                [
+                    'display_name.string' => 'Please enter a valid display name',
+                    'email.email' => 'please enter a valid format',
+                    'email.unique' => 'This email is already registered'
+                ]
+            );
+        // }
 
-        } catch (ValidationException $erreur) {
-            return response()->json([
-                'erreur' => 'Erreur de validation.',
-                'details' => $erreur->errors(),
-            ], 422);
-        }
+        // } catch (ValidationException $erreur) {
+        //     return response()->json([
+        //         'erreur' => 'Erreur de validation.',
+        //         'details' => $erreur->errors(),
+        //     ], 422);
+        // }
         //Gestion erreur : mauvais format email / email existe déjà. 
 
 
