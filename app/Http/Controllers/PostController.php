@@ -19,6 +19,7 @@ class PostController extends Controller {
             'user_id' => $user->id,
             'description' => $validated['description'],
         ]);
+        
 
         return response()->json([
             'message' => 'Thanks for sharing',
