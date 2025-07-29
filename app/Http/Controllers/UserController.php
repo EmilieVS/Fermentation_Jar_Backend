@@ -27,20 +27,18 @@ class UserController extends Controller
 
             ],
             [
-                'display_name.required' => 'Display name is required',
-                'username.unique' => 'This username is already taken',
-                'email.required' => 'Please enter an email',
-                'email.email' => 'please enter a valid format',
-                'email.unique' => 'This email is already registered',
-                'password.required' => 'Password is required',
+                'display_name.required' => 'Display name is required.',
+                'username.unique' => 'This username is already taken.',
+                'email.required' => 'Please enter an email.',
+                'email.email' => 'Please enter a valid format.',
+                'email.unique' => 'This email is already registered.',
+                'password.required' => 'Password is required.',
             ]
         );
 
-        // Mass assign the validated request data to a new instance of the User model
+        
         $user = User::create($data);
         $token = $user->createToken('auth_token')->plainTextToken;
-
-        //Gestion erreur : mauvais format email / email existe déjà. 
 
         return response()->json([
             'user' => $user,
@@ -70,7 +68,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        // try {
+        try {
             $updatedData = $request->validate(
                 [
                     'display_name' => ['sometimes', 'string'],
@@ -79,22 +77,19 @@ class UserController extends Controller
                     'bio' => ['sometimes', 'string']
                 ],
                 [
-                    'display_name.string' => 'Please enter a valid display name',
-                    'email.email' => 'please enter a valid format',
-                    'email.unique' => 'This email is already registered'
+                    'display_name.string' => 'Please enter a valid display name.',
+                    'email.email' => 'Please enter a valid format.',
+                    'email.unique' => 'This email is already registered.'
                 ]
             );
-        // }
 
-        // } catch (ValidationException $erreur) {
-        //     return response()->json([
-        //         'erreur' => 'Erreur de validation.',
-        //         'details' => $erreur->errors(),
-        //     ], 422);
-        // }
-        //Gestion erreur : mauvais format email / email existe déjà. 
-
-
+        } catch (ValidationException $erreur) {
+            return response()->json([
+                'erreur' => 'Erreur de validation.',
+                'details' => $erreur->errors(),
+            ], 422);
+        }
+        
         if (!empty($updatedData['password'])) {
             $updatedData['password'] = Hash::make($updatedData['password']);
         }
