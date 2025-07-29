@@ -17,17 +17,30 @@ class UserController extends Controller
     public function register(Request $request)
     {
 
-        $data = $request->validate([
-            'display_name' => 'required',
-            'username' => 'required|unique:users',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-            'bio' => 'nullable|string',
-        ]);
+        $data = $request->validate(
+            [
+                'display_name' => ['required'],
+                'username' => ['required', 'unique:users'],
+                'email' => ['required', 'email', 'unique:users'],
+                'password' => ['required'],
+                'bio' => ['nullable', 'string'],
+
+            ],
+            [
+                'display_name.required' => 'Display name is required',
+                'username.unique' => 'This username is already taken',
+                'email.required' => 'Please enter an email',
+                'email.email' => 'please enter a valid format',
+                'email.unique' => 'This email is already registered',
+                'password.required' => 'Password is required',
+            ]
+        );
 
         // Mass assign the validated request data to a new instance of the User model
         $user = User::create($data);
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        //Gestion erreur : mauvais format email / email existe déjà. 
 
         return response()->json([
             'user' => $user,
@@ -64,12 +77,15 @@ class UserController extends Controller
                 'password' => ['sometimes'],
                 'bio' => ['sometimes', 'string']
             ]);
+
         } catch (ValidationException $erreur) {
             return response()->json([
                 'erreur' => 'Erreur de validation.',
                 'details' => $erreur->errors(),
             ], 422);
         }
+        //Gestion erreur : mauvais format email / email existe déjà. 
+
 
         if (!empty($updatedData['password'])) {
             $updatedData['password'] = Hash::make($updatedData['password']);
@@ -88,13 +104,13 @@ class UserController extends Controller
     public function deleteAccount()
     {
         $deletedUser = auth()->user();
-        
-        $deleteUserPost = Post::where('user_id',$deletedUser->id);
+
+        $deleteUserPost = Post::where('user_id', $deletedUser->id);
 
         try {
-            
+
             $deletedUser->delete();
-            $deleteUserPost ->delete();
+            $deleteUserPost->delete();
 
             return response()->json([
                 'message' => 'Compte supprimé avec succès',
