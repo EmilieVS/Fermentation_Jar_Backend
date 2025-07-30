@@ -37,4 +37,8 @@ class User extends Authenticatable {
         return $this->hasMany(Post::class);
     }
     
+    public function getBioOrDefault(): string
+    {
+        return $this->bio ?: 'What\'s your fermentation style? Edit your profile and tell us in your bio!';
+    }
 }
