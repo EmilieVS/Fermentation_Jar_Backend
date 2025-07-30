@@ -36,7 +36,7 @@ class UserController extends Controller
             ]
         );
 
-        
+
         $user = User::create($data);
         $token = $user->createToken('auth_token')->plainTextToken;
 
@@ -74,7 +74,8 @@ class UserController extends Controller
                     'display_name' => ['sometimes', 'string'],
                     'email' => ['sometimes', 'email', Rule::unique('users')->ignore($user->id)],
                     'password' => ['sometimes'],
-                    'bio' => ['sometimes', 'string']
+                    'bio' => ['sometimes', 'string'],
+                    'profile_image' => ['sometimes','file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
                 ],
                 [
                     'display_name.string' => 'Please enter a valid display name.',
@@ -89,19 +90,36 @@ class UserController extends Controller
                 'details' => $erreur->errors(),
             ], 422);
         }
-        
+
         if (!empty($updatedData['password'])) {
             $updatedData['password'] = Hash::make($updatedData['password']);
         }
 
+        if ($request->hasFile('profile_image')) {
+            $image = $request->file('profile_image');
+            $name = time() . '_' . $image->getClientOriginalName();
+            $path = $image->storeAs('profile_images', $name, 'public');
+
+            // Optional: delete old image
+            // if ($user->profile_image) {
+            //     Storage::disk('public')->delete($user->profile_image);
+            // }
+
+            $user->profile_image = $path;
+            
+            $user->save();
+        }
+        
         $user->update($updatedData);
 
         $user->refresh();
-
+       
         return response()->json([
             'user' => $user,
         ], 200);
     }
+
+
 
 
     public function deleteAccount()

@@ -19,6 +19,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/post',[PostController::class,'createPost']);
     Route::get('/user/post', [PostController::class,'getUserPost']);
     Route::delete('/user', [UserController::class, 'deleteAccount']);
+    // Route::post('/profile/upload', [UserController::class, 'upload']);
 });
 
 
