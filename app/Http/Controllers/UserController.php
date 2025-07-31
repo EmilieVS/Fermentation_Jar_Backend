@@ -101,13 +101,11 @@ class UserController extends Controller
             $path = $image->storeAs('profile_images', $name, 'public');
 
             // Optional: delete old image
-            // if ($user->profile_image) {
-            //     Storage::disk('public')->delete($user->profile_image);
-            // }
+            if ($user->profile_image) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
 
-            $user->profile_image = $path;
-            
-            $user->save();
+            $updatedData['profile_image'] = $path;
         }
         
         $user->update($updatedData);
