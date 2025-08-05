@@ -22,6 +22,6 @@ Page de profil utilisateur	Routage dynamique et gestion des relations user/posts
 Tests de fonctionnalités	Écriture de tests PHPUnit pour valider les parcours utilisateurs principaux
 Séparation Front / Back	API Laravel consommée par un frontend Vue.js
 
-🔗 Lien vers le frontend
-👉 (https://github.com/EmilieVS/Fermentation_Jar_Frontend.git)
+🔗 Lien vers le [Frontend](https://github.com/EmilieVS/Fermentation_Jar_Frontend.git)
+
 
