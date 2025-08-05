@@ -3,10 +3,13 @@
 Application web de microblogging sur les aliments et techniques de fermentation.
 
 Type : Groupe
+
 Durée du sprint : 2 semaines
+
 Période : 7 mois de formation
 
 🧱 Stack
+
 Langages / Frameworks : PHP (Laravel) — JS (Vue.js) — CSS (Tailwind)
 
 Base de données : PostgreSQL
@@ -14,6 +17,7 @@ Base de données : PostgreSQL
 Outils / Services : VSCode — Sanctum — Eloquent — Postman — PHPUnit
 
 🧩 Fonctionnalités et compétences
+
 Fonctionnalité	Compétence acquise
 Inscription / Connexion utilisateur	Mise en place de l’authentification avec Laravel et Sanctum
 Création de post	Formulaire de création connecté à une API REST 
@@ -24,6 +28,7 @@ Tests de fonctionnalités	Écriture de tests PHPUnit pour valider les parcours u
 Séparation Front / Back	API Laravel consommée par un frontend Vue.js
 
 🔗 Lien vers le [Frontend](https://github.com/EmilieVS/Fermentation_Jar_Frontend.git)
+
 
 
 
