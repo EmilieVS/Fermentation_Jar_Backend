@@ -23,4 +23,5 @@ Tests de fonctionnalités	Écriture de tests PHPUnit pour valider les parcours u
 Séparation Front / Back	API Laravel consommée par un frontend Vue.js
 
 🔗 Lien vers le frontend
-👉 https://github.com/EmilieVS/Fermentation_Jar_Frontend.git
+👉 (https://github.com/EmilieVS/Fermentation_Jar_Frontend.git)
+
